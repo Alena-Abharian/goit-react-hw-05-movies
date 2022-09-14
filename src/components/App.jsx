@@ -1,16 +1,31 @@
+import { Routes, Route } from 'react-router-dom';
+import Home from '../page/home/Home';
+import Movies from '../page/movies/Movies';
+import Box from './Box';
+import { NavItem } from './App.styled';
+import MovieDetails from '../page/movieDetails/MovieDetails';
+import Cast from './cast/Cast';
+import Reviews from './reviews/Reviews';
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
+    <>
+      <Box as='header' width="100%" p={20}>
+        <Box as='nav'>
+          <NavItem to='/'>Home</NavItem>
+          <NavItem to='/movies'>Movies</NavItem>
+        </Box>
+      </Box>
 
-    </div>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/movies' element={<Movies />}>
+          <Route path=':movieId' element={<MovieDetails/>}>
+             <Route path='cast' element={<Cast/>}/>
+             <Route path='reviews' element={<Reviews/>} />
+          </Route>
+        </Route>
+      </Routes>
+    </>
   );
 };
