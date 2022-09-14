@@ -1,37 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { getCast } from '../../api/api';
+import Box from '../Box';
+import { ActorList, Item, Title, Text } from './Cast.styled';
+import { AiOutlineStop } from 'react-icons/ai';
 
 const Cast = () => {
   const [cast, setCast] = useState([]);
   const { movieId } = useParams();
 
   useEffect(() => {
-    getCast(movieId);
+    getCast(movieId)
+      .then(data => setCast(data));
   }, [movieId]);
 
-  async function getCast(movieId) {
-    try {
-      const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=ad66edf283bb948b384e974542ed7aed`);
-      console.log('cast', response.data.cast);
-      setCast(response.data.cast);
-    } catch (err) {
-      console.error(err.message);
-    }
-    console.log('cast', cast);
-
-    return (
-      <>
-        <p>Cast</p>
-        <ul>
-          {cast.map(({ name, id, character, profile_path }) => <li key={id}>
-            <img src={profile_path} alt={name} />
-            <h4>{name}</h4>
-            <p>{character}</p>
-          </li>)}
-        </ul>
-      </>
-    );
-  }
+  return (
+    <Box as='section' pl={230} pr={20}>
+      <ActorList>
+        {cast.map(({ name, id, character, profile_path }) => <Item key={id}>
+          {profile_path ? (<img src={`https://image.tmdb.org/t/p/w500/${profile_path}`} alt={name} width={100} />) : (
+            <AiOutlineStop size='100px' />)}
+          <Title>{name}</Title>
+          <Text>{character}</Text>
+        </Item>)}
+      </ActorList>
+    </Box>
+  );
 };
 export default Cast;

@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const Title = styled.h1`
-  color: ${props => props.theme.colors.text};
-`;
-
 export const Item = styled(Link)`
   text-decoration: none;
   color: ${p => p.theme.colors.black};
@@ -20,4 +16,3 @@ export const ListItem = styled.li`
   margin-top: 10px;
   padding: 0;
 `;
-

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Title } from './Home.styled';
 import { fetchTrendingMovies } from '../../api/api';
-import { Link } from 'react-router-dom';
 import Box from '../../components/Box';
+import { Item, Title, ListItem } from './Home.styled';
 import Loader from '../../components/loader/Loader';
 
 const Home = () => {
@@ -15,22 +14,22 @@ const Home = () => {
   }, []);
 
   return (
-    <>
+    <Box as='section' pl={20}>
       <Title>Trending today</Title>
       {movies ? (
         <>
           <Box>
             <ul>{movies.map(({ title, id }) =>
-              <li key={id}>
-                <Link to={`/movies/${id}`}>{title}</Link>
-              </li>)}
+              <ListItem key={id}>
+                <Item to={`/movies/${id}`}>{title}</Item>
+              </ListItem>)}
             </ul>
           </Box>
         </>
       ) : (
         <Loader />
       )}
-    </>
+    </Box>
   );
 };
 

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams, Outlet } from 'react-router-dom';
+import { searchMovies } from '../../api/api';
 import Search from '../../components/search/Search';
-import { useSearchParams, Link, Outlet } from 'react-router-dom';
-import axios from 'axios';
-// import { searchMovies } from '../../api/api';
+import Box from '../../components/Box';
+import { Item, ListItem } from './Movies.styled';
 
 const Movies = () => {
   //state search movies
@@ -11,18 +12,11 @@ const Movies = () => {
   const queryParams = searchParams.get('query') ?? '';
 
   useEffect(() => {
-    searchMovies(queryParams);
-    // .then(results => setMovies(results))
-  }, [queryParams]);
-
-  async function searchMovies(queryParams) {
-    try {
-      const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=ad66edf283bb948b384e974542ed7aed&query=${queryParams}`);
-      setMovies(response.data.results);
-    } catch (err) {
-      console.error(err.message);
+    if (queryParams) {
+      searchMovies(queryParams)
+        .then(results => setMovies(results));
     }
-  }
+  }, [queryParams]);
 
   const filterMovies = (value) => {
     setSearchParams(value !== '' ? { query: value } : {});
@@ -31,13 +25,13 @@ const Movies = () => {
   const visibleMovies = movies.filter(movie => movie.title.toLowerCase().includes(queryParams.toLowerCase()));
 
   return (
-    <>
+    <Box as='section' pl={20}>
       <Search onFilterMovies={filterMovies} />
       <ul>
-        {visibleMovies.map(({ title, id }) => <li key={id}><Link to={`/movies/${id}`}>{title}</Link></li>)}
+        {visibleMovies.map(({ title, id }) => <ListItem key={id}><Item to={`/movies/${id}`}>{title}</Item></ListItem>)}
       </ul>
       <Outlet />
-    </>
+    </Box>
   );
 };
 
