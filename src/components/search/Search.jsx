@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Search = ({ onFilterMovies }) => {
   const [query, setQuery] = useState('');
@@ -23,6 +24,10 @@ const Search = ({ onFilterMovies }) => {
       </form>
     </>
   );
+};
+
+Search.propTypes = {
+  onFilterMovies: PropTypes.func.isRequired,
 };
 
 export default Search;
