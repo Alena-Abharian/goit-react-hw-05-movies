@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useParams} from 'react-router-dom';
 import { getMovie } from '../../api/api';
 import Box from '../../components/Box';
 import { Button, Text, H1, Title, Nav, Item, Ul } from './MovieDetails.styled';
@@ -10,7 +10,6 @@ const MovieDetails = () => {
   const [movies, setMovies] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
   const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const MovieDetails = () => {
     <Box as='section' p={20}>
       <Box display='flex'>
         <Box display='flex' flexDirection='column' alignItems='flex-start'>
-          <Button to={backLinkHref} onClick={() => navigate(-2)}> <BiArrowBack /></Button>
+          <Button to={backLinkHref}> <BiArrowBack /></Button>
           <img src={`https://image.tmdb.org/t/p/original${movies.poster_path}`} alt={movies.title} width={250} />
         </Box>
         <Box display='flex' flexDirection='column' alignItems='flex-start' pl={20} pt={30} width={600}>
