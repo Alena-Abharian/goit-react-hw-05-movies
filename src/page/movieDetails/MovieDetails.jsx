@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useLocation, useParams} from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovie } from '../../api/api';
 import Box from '../../components/Box';
 import { Button, Text, H1, Title, Nav, Item, Ul } from './MovieDetails.styled';
@@ -40,8 +40,8 @@ const MovieDetails = () => {
       <Box>
         <p>Additional information</p>
         <Ul>
-          <Nav> <Item to='cast'>&#9672; Cast</Item></Nav>
-          <Nav> <Item to='reviews'>&#9672; Reviews</Item></Nav>
+          <Nav> <Item to='cast' state={location.state}>&#9672; Cast</Item></Nav>
+          <Nav> <Item to='reviews' state={location.state}>&#9672; Reviews</Item></Nav>
         </Ul>
       </Box>
       <Outlet />
